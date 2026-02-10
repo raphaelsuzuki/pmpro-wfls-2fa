@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: PMPro Wordfence 2FA Integration
- * Plugin URI: https://github.com/yourusername/pmpro-wfls
+ * Plugin Name: WLS 2FA for Paid Memberships Pro
+ * Plugin URI: https://github.com/raphaelsuzuki/pmpro-wfls-2fa
  * Description: Enables Wordfence Login Security 2FA on Paid Memberships Pro login forms
  * Version: 1.0.1
- * Author: Your Name
- * Author URI: https://yourwebsite.com
+ * Author: Raphael Suzuki
+ * Author URI: https://raybeam.jp
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain: pmpro-wfls
+ * Text Domain: pmpro-wfls-2fa
  * Domain Path: /languages
  */
 
@@ -18,14 +18,14 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants (Added conditional checks for safety)
-if (!defined('PMPRO_WFLS_VERSION')) {
-    define('PMPRO_WFLS_VERSION', '1.0.1');
+if (!defined('PMPRO_WFLS_2FA_VERSION')) {
+    define('PMPRO_WFLS_2FA_VERSION', '1.0.1');
 }
-if (!defined('PMPRO_WFLS_PLUGIN_DIR')) {
-    define('PMPRO_WFLS_PLUGIN_DIR', plugin_dir_path(__FILE__));
+if (!defined('PMPRO_WFLS_2FA_PLUGIN_DIR')) {
+    define('PMPRO_WFLS_2FA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 }
-if (!defined('PMPRO_WFLS_PLUGIN_URL')) {
-    define('PMPRO_WFLS_PLUGIN_URL', plugin_dir_url(__FILE__));
+if (!defined('PMPRO_WFLS_2FA_PLUGIN_URL')) {
+    define('PMPRO_WFLS_2FA_PLUGIN_URL', plugin_dir_url(__FILE__));
 }
 
 /**
@@ -52,7 +52,7 @@ function pmpro_wfls_check_dependencies() {
                 return;
             }
             echo '<div class="notice notice-error"><p>';
-            echo esc_html__('PMPro Wordfence 2FA Integration requires the following plugins to be active:', 'pmpro-wfls') . ' ';
+            echo esc_html__('PMPro Wordfence 2FA Integration requires the following plugins to be active:', 'pmpro-wfls-2fa') . ' ';
             echo esc_html(implode(', ', $missing_plugins));
             echo '</p></div>';
         });
@@ -74,7 +74,7 @@ function pmpro_wfls_init() {
     }
 
     // Load text domain for translations
-    load_plugin_textdomain('pmpro-wfls', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    load_plugin_textdomain('pmpro-wfls-2fa', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
     // Add PMPro form detection to Wordfence
     add_action('wp_enqueue_scripts', 'pmpro_wfls_enqueue_scripts');
