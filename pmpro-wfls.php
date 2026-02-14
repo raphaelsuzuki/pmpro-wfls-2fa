@@ -89,25 +89,20 @@ function pmpro_wfls_init() {
 /**
  * Enqueue Wordfence scripts on PMPro login pages.
  *
- * NOTE: The original code used a fragile WooCommerce hook.
- * We now rely on Wordfence's default enqueueing or the inline script.
- * If Wordfence's script is not enqueued by default on PMPro login pages,
- * this function should be replaced with the correct Wordfence API call to enqueue the script.
+ * Wordfence only enqueues its login script on wp-login.php and WooCommerce hooks.
+ * We call Wordfence's public _login_enqueue_scripts() so 2FA/CAPTCHA run on PMPro login.
  *
  * @since 1.0.1
  * @return void
  */
 function pmpro_wfls_enqueue_scripts() {
-    if (function_exists('pmpro_is_login_page') && pmpro_is_login_page()) {
-        // Enqueue jQuery as a dependency for the inline script
-        wp_enqueue_script('jquery');
-
-        // Attempt to trigger Wordfence's login script enqueueing if necessary.
-        // The correct hook/function is unknown without Wordfence API docs.
-        // A common pattern is to use a hook that Wordfence listens to, e.g.,
-        // do_action('login_enqueue_scripts'); // If PMPro page acts like a login page
-        // For now, we rely on the inline script to check for the Wordfence script.
+    if (!function_exists('pmpro_is_login_page') || !pmpro_is_login_page()) {
+        return;
     }
+    if (!class_exists('WordfenceLS\Controller_WordfenceLS')) {
+        return;
+    }
+    \WordfenceLS\Controller_WordfenceLS::shared()->_login_enqueue_scripts();
 }
 
 /**
@@ -161,6 +156,11 @@ function pmpro_wfls_extend_form_detection() {
 /**
  * Add PMPro login detection to Wordfence.
  *
+ * Only returns true for actual form submissions (POST with credentials), not for GET
+ * page views. This avoids Wordfence treating innocent login-page views as login
+ * attempts (rate limiting, 2FA prompts, CAPTCHA, etc.). We do not read or use
+ * credential values; authentication and CSRF are handled by Wordfence and PMPro.
+ *
  * @since 1.0.0
  * @param bool $is_custom_login Whether Wordfence has detected a custom login form.
  * @return bool
@@ -170,15 +170,10 @@ function pmpro_wfls_is_pmpro_login($is_custom_login) {
         return $is_custom_login;
     }
 
-    // Check if this is a PMPro login request
-    if (function_exists('pmpro_is_login_page') && pmpro_is_login_page()) {
-        // High-priority fix: Use !empty() for better practice and check for required fields.
-        // NOTE: Nonce verification (CSRF protection) should ideally be checked here,
-        // but since this function only *detects* a login attempt for Wordfence,
-        // and Wordfence/PMPro handle the actual authentication, we proceed with detection.
-        if (!empty($_POST['username']) && !empty($_POST['password'])) {
-            return true;
-        }
+    // Only treat POST requests with credentials as login attempts (not GET page views).
+    if (function_exists('pmpro_is_login_page') && pmpro_is_login_page()
+        && !empty($_POST['username']) && !empty($_POST['password'])) {
+        return true;
     }
 
     return $is_custom_login;
