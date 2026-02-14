@@ -156,11 +156,6 @@ function pmpro_wfls_extend_form_detection() {
 /**
  * Add PMPro login detection to Wordfence.
  *
- * Only returns true for actual form submissions (POST with credentials), not for GET
- * page views. This avoids Wordfence treating innocent login-page views as login
- * attempts (rate limiting, 2FA prompts, CAPTCHA, etc.). We do not read or use
- * credential values; authentication and CSRF are handled by Wordfence and PMPro.
- *
  * @since 1.0.0
  * @param bool $is_custom_login Whether Wordfence has detected a custom login form.
  * @return bool
@@ -170,13 +165,50 @@ function pmpro_wfls_is_pmpro_login($is_custom_login) {
         return $is_custom_login;
     }
 
-    // Only treat POST requests with credentials as login attempts (not GET page views).
-    if (function_exists('pmpro_is_login_page') && pmpro_is_login_page()
-        && !empty($_POST['username']) && !empty($_POST['password'])) {
-        return true;
+    // Check if this is a PMPro login request
+    if (function_exists('pmpro_is_login_page') && pmpro_is_login_page()) {
+        // High-priority fix: Use !empty() for better practice and check for required fields.
+        // NOTE: Nonce verification (CSRF protection) should ideally be checked here,
+        // but since this function only *detects* a login attempt for Wordfence,
+        // and Wordfence/PMPro handle the actual authentication, we proceed with detection.
+        if (!empty($_POST['username']) && !empty($_POST['password'])) {
+            return true;
+        }
     }
 
     return $is_custom_login;
+}
+
+/**
+ * Show an admin notice when Wordfence 2FA and reCAPTCHA are both disabled.
+ *
+ * In that case Wordfence does not enqueue its login script, so our form detection
+ * is never attached and the integration is inactive. This notice avoids silent
+ * failure so admins know to enable 2FA or reCAPTCHA in Wordfence if they want the
+ * integration on PMPro login pages.
+ *
+ * @since 1.0.2
+ * @return void
+ */
+function pmpro_wfls_maybe_notice_integration_inactive() {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    if (!class_exists('WordfenceLS\Controller_CAPTCHA') || !class_exists('WordfenceLS\Controller_Users')) {
+        return;
+    }
+    $captcha_enabled = \WordfenceLS\Controller_CAPTCHA::shared()->enabled();
+    $any_2fa = \WordfenceLS\Controller_Users::shared()->any_2fa_active();
+    if ($captcha_enabled || $any_2fa) {
+        return;
+    }
+    $url = is_multisite() ? network_admin_url('admin.php?page=WFLS') : admin_url('admin.php?page=WFLS');
+    $message = sprintf(
+        /* translators: %s: link to Wordfence Login Security settings */
+        __('PMPro Wordfence 2FA Integration is active but not running on PMPro login: 2FA and reCAPTCHA are both disabled in %s. Enable at least one for the integration to run.', 'pmpro-wfls-2fa'),
+        '<a href="' . esc_url($url) . '">' . esc_html__('Wordfence Login Security', 'pmpro-wfls-2fa') . '</a>'
+    );
+    echo '<div class="notice notice-info"><p>' . wp_kses($message, array('a' => array('href' => array()))) . '</p></div>';
 }
 
 // Initialize the plugin
