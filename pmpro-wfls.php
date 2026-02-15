@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: WLS 2FA for Paid Memberships Pro
+ * Plugin Name: WFLS 2FA for Paid Memberships Pro
  * Plugin URI: https://github.com/raphaelsuzuki/pmpro-wfls-2fa
  * Description: Enables Wordfence Login Security 2FA on Paid Memberships Pro login forms
  * Version: 1.0.1
@@ -145,6 +145,22 @@ function pmpro_wfls_extend_form_detection() {
 
                 return false;
             };
+        }
+
+        // Add login-submit class to submit paragraphs for styling (main form + WFLS overlay when it appears)
+        $(".pmpro_form p.submit, .pmpro_login_wrap p.submit").addClass("login-submit");
+        var observer = new MutationObserver(function() {
+            $("#wfls-prompt-overlay p.submit").addClass("login-submit");
+            $("#wfls-token").closest("p").addClass("login-password");
+            if ($("#wfls-prompt-overlay").length) {
+                $("#wp-submit").hide();
+            } else {
+                $("#wp-submit").show();
+            }
+        });
+        var formEl = $(".pmpro_form, .pmpro_login_wrap").get(0);
+        if (formEl) {
+            observer.observe(formEl, { childList: true, subtree: true });
         }
     });
     ';
