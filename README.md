@@ -1,50 +1,65 @@
-# PMPro Wordfence 2FA Integration
+# PMPro Wordfence 2FA
 
-**Enables Wordfence Login Security 2FA on Paid Memberships Pro login forms**
+Bridges the gap between Wordfence Login Security and Paid Memberships Pro, enabling secure Two-Factor Authentication (2FA) directly on your membership login forms.
 
-## Description
+Keep your membership site secure by requiring 2FA for all users, including those logging in through custom PMPro forms. This plugin ensures that Wordfence's robust security features are fully operational wherever your users sign in.
 
-This plugin bridges the gap between Wordfence Login Security and Paid Memberships Pro, allowing users to enter 2FA codes on PMPro login forms - just like the existing WooCommerce integration.
+**Notice:** This plugin requires both Paid Memberships Pro and Wordfence Login Security to be installed and active.
 
-## Features
+---
 
-- Seamless 2FA integration with PMPro login forms
-- Uses existing Wordfence 2FA functionality
-- No changes to core plugins required
-- Lightweight bridge implementation
+## Key Features
 
-## Requirements
+- **Seamless 2FA Integration**: Automatically detects PMPro login forms and injects the 2FA prompt when required.
+- **Native Wordfence Support**: Uses your existing Wordfence settings, tokens, and recovery codes without additional configuration.
+- **Improved User Experience**: Provides a consistent 2FA experience for members, matching the core WordPress and WooCommerce login flows.
+- **Lightweight & Efficient**: Zero-configuration, lightweight bridge that hook directly into Wordfence's authentication system.
+- **Admin Notifications**: In-dashboard alerts to help you ensure the integration is properly configured and active.
 
-- Wordfence Login Security plugin (active)
-- Paid Memberships Pro plugin (active)
-- WordPress 5.0+
-- PHP 7.2+
+---
 
-## Installation
+## Quick Start
 
-1. Upload the plugin to your `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Ensure both Wordfence Login Security and Paid Memberships Pro are active
+### Installation
 
-## Usage
+1. Upload the `pmpro-wfls-2fa` folder to your `/wp-content/plugins/` directory.
+2. Activate the plugin through the **Plugins** menu in WordPress.
+3. Ensure **Wordfence Login Security** has 2FA or reCAPTCHA enabled.
 
-Once activated, the plugin automatically:
-- Detects PMPro login forms
-- Enqueues Wordfence 2FA scripts on PMPro pages
-- Enables 2FA code entry on PMPro login forms
-- Uses existing Wordfence 2FA settings and user configurations
+### Requirements
+
+- **Wordfence Login Security** (active)
+- **Paid Memberships Pro** (active)
+- **WordPress** (v5.0 or higher)
+- **PHP** (v7.2 or higher)
+
+---
 
 ## Technical Details
 
 The plugin works by:
-1. Extending Wordfence's form detection system to recognize PMPro login forms
-2. Triggering Wordfence script enqueueing on PMPro login pages
-3. Ensuring PMPro login requests are properly handled by Wordfence authentication
+1. **Form Detection**: Extending Wordfence's JavaScript locator to recognize PMPro-specific form classes and input names.
+2. **Script Enqueueing**: Ensuring Wordfence's frontend assets are loaded on any page where a PMPro login form appears.
+3. **Authentication Hooks**: Filtering custom login requests to ensure Wordfence processes the 2FA verification before authentication is completed.
 
-## License
-
-GPL-2.0+ - See LICENSE file for details
+---
 
 ## Support
 
-For support, please open an issue on the GitHub repository.
+- **Issues:** [GitHub Issues](https://github.com/raphaelsuzuki/pmpro-wfls-2fa/issues)
+- **Updates:** Automatic via Git Updater
+
+## Contributing
+
+Contributions are welcome! Please submit pull requests or open issues on GitHub.
+
+- **Repository:** https://github.com/raphaelsuzuki/pmpro-wfls-2fa
+- **Pull Requests:** Follow WordPress Coding Standards
+
+## License
+
+GPL v2 or later - https://www.gnu.org/licenses/gpl-2.0.html
+
+## Disclaimer
+
+This repository and its documentation were created with the assistance of AI. While efforts have been made to ensure accuracy and completeness, no guarantee is provided. Use at your own risk. Always test in a safe environment before deploying to production.

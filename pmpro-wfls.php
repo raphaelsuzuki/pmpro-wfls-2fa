@@ -10,6 +10,8 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: pmpro-wfls-2fa
  * Domain Path: /languages
+ * GitHub Plugin URI: https://github.com/raphaelsuzuki/pmpro-wfls-2fa
+ * Primary Branch: main
  */
 
 // Exit if accessed directly
