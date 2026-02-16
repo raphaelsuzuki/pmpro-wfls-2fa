@@ -2,6 +2,9 @@
 
 # PMPro Wordfence 2FA
 
+![CI](https://github.com/raphaelsuzuki/pmpro-wfls-2fa/actions/workflows/ci.yml/badge.svg)
+
+
 Bridges the gap between Wordfence Login Security and Paid Memberships Pro, enabling secure Two-Factor Authentication (2FA) directly on your membership login forms.
 
 Keep your membership site secure by requiring 2FA for all users, including those logging in through custom PMPro forms. This plugin ensures that Wordfence's robust security features are fully operational wherever your users sign in.
