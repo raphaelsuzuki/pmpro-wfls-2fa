@@ -1,5 +1,3 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/659e7985a0e743f78f6ee93a10487d9f)](https://app.codacy.com?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-
 # PMPro Wordfence 2FA
 
 ![CI](https://github.com/raphaelsuzuki/pmpro-wfls-2fa/actions/workflows/ci.yml/badge.svg)
