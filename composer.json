@@ -1,0 +1,24 @@
+{
+    "name": "raphaelsuzuki/pmpro-wfls-2fa",
+    "description": "Enables Wordfence Login Security 2FA on Paid Memberships Pro login forms",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Raphael Suzuki",
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^1.4",
+        "brain/monkey": "^2.6"
+    },
+    "autoload": {
+        "files": [
+            "pmpro-wfls.php"
+        ]
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
