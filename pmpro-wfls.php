@@ -53,10 +53,15 @@ function pmpro_wfls_check_dependencies() {
             if (!current_user_can('activate_plugins')) {
                 return;
             }
-            echo '<div class="notice notice-error"><p>';
-            echo esc_html__('PMPro Wordfence 2FA Integration requires the following plugins to be active:', 'pmpro-wfls-2fa') . ' ';
-            echo esc_html(implode(', ', $missing_plugins));
-            echo '</p></div>';
+            ?>
+            <div class="notice notice-error">
+                <p>
+                    <?php
+                    echo esc_html__('PMPro Wordfence 2FA Integration requires the following plugins to be active:', 'pmpro-wfls-2fa') . ' ' . esc_html(implode(', ', $missing_plugins));
+                    ?>
+                </p>
+            </div>
+            <?php
         });
         return false;
     }
@@ -76,7 +81,7 @@ function pmpro_wfls_init() {
     }
 
     // Load text domain for translations
-    load_plugin_textdomain('pmpro-wfls-2fa', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    load_plugin_textdomain('pmpro-wfls-2fa', false, plugin_basename(__DIR__) . '/languages');
 
     // Add PMPro form detection to Wordfence
     add_action('wp_enqueue_scripts', 'pmpro_wfls_enqueue_scripts');
@@ -226,7 +231,11 @@ function pmpro_wfls_maybe_notice_integration_inactive() {
         __('PMPro Wordfence 2FA Integration is active but not running on PMPro login: 2FA and reCAPTCHA are both disabled in %s. Enable at least one for the integration to run.', 'pmpro-wfls-2fa'),
         '<a href="' . esc_url($url) . '">' . esc_html__('Wordfence Login Security', 'pmpro-wfls-2fa') . '</a>'
     );
-    echo '<div class="notice notice-info"><p>' . wp_kses($message, array('a' => array('href' => array()))) . '</p></div>';
+    ?>
+    <div class="notice notice-info">
+        <p><?php echo wp_kses($message, array('a' => array('href' => array()))); ?></p>
+    </div>
+    <?php
 }
 
 // Initialize the plugin
