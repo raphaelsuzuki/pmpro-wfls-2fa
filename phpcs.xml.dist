@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Plugin">
+    <description>WPCS rules for this plugin</description>
+    <file>.</file>
+    <exclude-path>./vendor</exclude-path>
+    <exclude-path>./tests</exclude-path>
+    <rule ref="WordPress" />
+</ruleset>
