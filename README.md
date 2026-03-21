@@ -1,6 +1,10 @@
 # PMPro Wordfence 2FA
 
 ![CI](https://github.com/raphaelsuzuki/pmpro-wfls-2fa/actions/workflows/ci.yml/badge.svg)
+[![License: GPL v2](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![PHP 7.2+](https://img.shields.io/badge/PHP-7.2%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![WordPress 5.0+](https://img.shields.io/badge/WordPress-5.0%2B-blue?logo=wordpress)](https://wordpress.org/)
+[![Last Updated](https://img.shields.io/github/last-commit/raphaelsuzuki/pmpro-wfls-2fa?label=Last%20Updated)](https://github.com/raphaelsuzuki/pmpro-wfls-2fa/commits/master)
 
 
 Bridges the gap between Wordfence Login Security and Paid Memberships Pro, enabling secure Two-Factor Authentication (2FA) directly on your membership login forms.
