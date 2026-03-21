@@ -1,0 +1,21 @@
+{
+  "release-type": "simple",
+  "include-v-in-tag": true,
+  "changelog-path": "CHANGELOG.md",
+  "package-name": "pmpro-wfls-2fa",
+  "version-file": "pmpro-wfls.php",
+  "extra-files": [
+    {
+      "file": "pmpro-wfls.php",
+      "updater": "generic",
+      "extractor": "regex",
+      "pattern": "Version: (?<version>\\d+\\.\\d+\\.\\d+)"
+    },
+    {
+      "file": "pmpro-wfls.php",
+      "updater": "generic",
+      "extractor": "regex",
+      "pattern": "define\\( 'PMPRO_WFLS_2FA_VERSION', '(?<version>\\d+\\.\\d+\\.\\d+)' \);"
+    }
+  ]
+}
