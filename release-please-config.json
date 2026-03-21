@@ -15,7 +15,7 @@
       "file": "pmpro-wfls.php",
       "updater": "generic",
       "extractor": "regex",
-      "pattern": "define\\( 'PMPRO_WFLS_2FA_VERSION', '(?<version>\\d+\\.\\d+\\.\\d+)' \\\);"
+      "pattern": "define\\( 'PMPRO_WFLS_2FA_VERSION', '(?<version>\\d+\\.\\d+\\.\\d+)' \);"
     }
   ]
 }
