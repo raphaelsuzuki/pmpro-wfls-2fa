@@ -38,7 +38,7 @@ if (!defined('PMPRO_WFLS_2FA_PLUGIN_URL')) {
  * @since 1.0.0
  * @return bool True if all dependencies are met, false otherwise.
  */
-function pmpro_wfls_check_dependencies() {
+function pmpro_wfls_2fa_check_dependencies() {
     $missing_plugins = array();
 
     if (!class_exists('WordfenceLS\Controller_WordfenceLS')) {
@@ -72,8 +72,8 @@ function pmpro_wfls_check_dependencies() {
  * @since 1.0.0
  * @return void
  */
-function pmpro_wfls_init() {
-    if (!pmpro_wfls_check_dependencies()) {
+function pmpro_wfls_2fa_init() {
+    if (!pmpro_wfls_2fa_check_dependencies()) {
         return;
     }
 
@@ -81,13 +81,13 @@ function pmpro_wfls_init() {
     load_plugin_textdomain('pmpro-wfls-2fa', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
     // Add PMPro form detection to Wordfence
-    add_action('wp_enqueue_scripts', 'pmpro_wfls_enqueue_scripts');
+    add_action('wp_enqueue_scripts', 'pmpro_wfls_2fa_enqueue_scripts');
 
     // Extend Wordfence form detection via JavaScript (now using wp_add_inline_script)
-    add_action('wp_enqueue_scripts', 'pmpro_wfls_extend_form_detection', 20); // Run after wordfence scripts are likely enqueued
+    add_action('wp_enqueue_scripts', 'pmpro_wfls_2fa_extend_form_detection', 20); // Run after wordfence scripts are likely enqueued
 
     // Add PMPro login detection to Wordfence authentication
-    add_filter('wfls_is_custom_login', 'pmpro_wfls_is_pmpro_login', 10, 1);
+    add_filter('wfls_is_custom_login', 'pmpro_wfls_2fa_is_pmpro_login', 10, 1);
 }
 
 /**
@@ -99,7 +99,7 @@ function pmpro_wfls_init() {
  * @since 1.0.1
  * @return void
  */
-function pmpro_wfls_enqueue_scripts() {
+function pmpro_wfls_2fa_enqueue_scripts() {
     if (!function_exists('pmpro_is_login_page') || !pmpro_is_login_page()) {
         return;
     }
@@ -117,7 +117,7 @@ function pmpro_wfls_enqueue_scripts() {
  * @since 1.0.1
  * @return void
  */
-function pmpro_wfls_extend_form_detection() {
+function pmpro_wfls_2fa_extend_form_detection() {
     if (!function_exists('pmpro_is_login_page') || !pmpro_is_login_page()) {
         return;
     }
@@ -180,7 +180,7 @@ function pmpro_wfls_extend_form_detection() {
  * @param bool $is_custom_login Whether Wordfence has detected a custom login form.
  * @return bool
  */
-function pmpro_wfls_is_pmpro_login($is_custom_login) {
+function pmpro_wfls_2fa_is_pmpro_login($is_custom_login) {
     if ($is_custom_login) {
         return $is_custom_login;
     }
@@ -210,7 +210,7 @@ function pmpro_wfls_is_pmpro_login($is_custom_login) {
  * @since 1.0.2
  * @return void
  */
-function pmpro_wfls_maybe_notice_integration_inactive() {
+function pmpro_wfls_2fa_maybe_notice_integration_inactive() {
     if (!current_user_can('manage_options')) {
         return;
     }
@@ -232,4 +232,4 @@ function pmpro_wfls_maybe_notice_integration_inactive() {
 }
 
 // Initialize the plugin
-add_action('plugins_loaded', 'pmpro_wfls_init');
+add_action('plugins_loaded', 'pmpro_wfls_2fa_init');
