@@ -20,5 +20,5 @@ Add a footer line:
 ## Release process
 
 - Releases are automated with release-please.
-- Ensure version is managed in `pmpro-wfls.php`.
+- Ensure version is managed in `pmpro-wfls-2fa.php`.
 - Branch `main` / `master` triggers release PR creation automatically.

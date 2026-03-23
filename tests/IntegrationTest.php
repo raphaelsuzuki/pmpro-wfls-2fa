@@ -24,7 +24,7 @@ class IntegrationTest extends TestCase {
 	/**
 	 * Test dependency check function.
 	 */
-	public function test_pmpro_wfls_check_dependencies() {
+	public function test_pmpro_wfls_2fa_check_dependencies() {
 		// Mock WordfenceLS\Controller_WordfenceLS class exists
 		Functions\expect('class_exists')
 			->with('WordfenceLS\Controller_WordfenceLS')
@@ -35,51 +35,51 @@ class IntegrationTest extends TestCase {
 			->with('pmpro_is_login_page')
 			->andReturn(true);
 
-		$this->assertTrue( pmpro_wfls_check_dependencies() );
+		$this->assertTrue( pmpro_wfls_2fa_check_dependencies() );
 	}
 
 	/**
-	 * Test pmpro_wfls_init adds hooks.
+	 * Test pmpro_wfls_2fa_init adds hooks.
 	 */
-	public function test_pmpro_wfls_init() {
+	public function test_pmpro_wfls_2fa_init() {
 		Monkey\Functions\expect('class_exists')->andReturn(true);
 		Monkey\Functions\expect('function_exists')->andReturn(true);
 		Monkey\Functions\expect('load_plugin_textdomain')->once();
 
-		pmpro_wfls_init();
+		pmpro_wfls_2fa_init();
 
-		$this->assertGreaterThan( 0, has_action( 'wp_enqueue_scripts', 'pmpro_wfls_enqueue_scripts' ) );
-		$this->assertGreaterThan( 0, has_action( 'wp_enqueue_scripts', 'pmpro_wfls_extend_form_detection' ) );
-		$this->assertGreaterThan( 0, has_filter( 'wfls_is_custom_login', 'pmpro_wfls_is_pmpro_login' ) );
+		$this->assertGreaterThan( 0, has_action( 'wp_enqueue_scripts', 'pmpro_wfls_2fa_enqueue_scripts' ) );
+		$this->assertGreaterThan( 0, has_action( 'wp_enqueue_scripts', 'pmpro_wfls_2fa_extend_form_detection' ) );
+		$this->assertGreaterThan( 0, has_filter( 'wfls_is_custom_login', 'pmpro_wfls_2fa_is_pmpro_login' ) );
 	}
 
 	/**
-	 * Test pmpro_wfls_is_pmpro_login detection logic.
+	 * Test pmpro_wfls_2fa_is_pmpro_login detection logic.
 	 */
-	public function test_pmpro_wfls_is_pmpro_login() {
+	public function test_pmpro_wfls_2fa_is_pmpro_login() {
 		// Case 1: Already true
-		$this->assertTrue( pmpro_wfls_is_pmpro_login( true ) );
+		$this->assertTrue( pmpro_wfls_2fa_is_pmpro_login( true ) );
 
 		// Case 2: PMPro login page with credentials
 		Functions\expect('pmpro_is_login_page')->andReturn(true);
 		Functions\expect('function_exists')->with('pmpro_is_login_page')->andReturn(true);
 		$_POST['username'] = 'testuser';
 		$_POST['password'] = 'password';
-		$this->assertTrue( pmpro_wfls_is_pmpro_login( false ) );
+		$this->assertTrue( pmpro_wfls_2fa_is_pmpro_login( false ) );
 
 		// Case 3: PMPro login page WITHOUT credentials
 		unset($_POST['username'], $_POST['password']);
-		$this->assertFalse( pmpro_wfls_is_pmpro_login( false ) );
+		$this->assertFalse( pmpro_wfls_2fa_is_pmpro_login( false ) );
 
 		// Case 4: Not a PMPro login page
 		Functions\expect('pmpro_is_login_page')->andReturn(false);
-		$this->assertFalse( pmpro_wfls_is_pmpro_login( false ) );
+		$this->assertFalse( pmpro_wfls_2fa_is_pmpro_login( false ) );
 	}
 
 	/**
 	 * Test script enqueuing logic.
 	 */
-	public function test_pmpro_wfls_enqueue_scripts() {
+	public function test_pmpro_wfls_2fa_enqueue_scripts() {
 		// Mock Wordfence controller
 		$wfls = Mockery::mock('overload:WordfenceLS\Controller_WordfenceLS');
 		$wfls->shouldReceive('shared->_login_enqueue_scripts')->once();
@@ -88,6 +88,6 @@ class IntegrationTest extends TestCase {
 		Functions\expect('function_exists')->with('pmpro_is_login_page')->andReturn(true);
 		Functions\expect('class_exists')->with('WordfenceLS\Controller_WordfenceLS')->andReturn(true);
 
-		pmpro_wfls_enqueue_scripts();
+		pmpro_wfls_2fa_enqueue_scripts();
 	}
 }

@@ -15,7 +15,7 @@
     },
     "autoload": {
         "files": [
-            "pmpro-wfls.php"
+            "pmpro-wfls-2fa.php"
         ]
     },
     "scripts": {
