@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/raphaelsuzuki/pmpro-wfls-2fa
  * Description: Enables Wordfence Login Security 2FA on Paid Memberships Pro login forms
  * x-release-please-start-version
- * Version: 1.0.1
+ * Version: 1.0.0
  * x-release-please-end
  * Author: Raphael Suzuki
  * Author URI: https://raybeam.jp
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 
 // Define plugin constants (Added conditional checks for safety)
 if (!defined('PMPRO_WFLS_2FA_VERSION')) {
-    define('PMPRO_WFLS_2FA_VERSION', '1.0.1'); // x-release-please-version
+    define('PMPRO_WFLS_2FA_VERSION', '1.0.0'); // x-release-please-version
 }
 if (!defined('PMPRO_WFLS_2FA_PLUGIN_DIR')) {
     define('PMPRO_WFLS_2FA_PLUGIN_DIR', plugin_dir_path(__FILE__));
